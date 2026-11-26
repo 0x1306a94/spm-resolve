@@ -1,6 +1,5 @@
-import Foundation
-
 import DepctlDEPS
+import Foundation
 import SwiftParser
 import SwiftSyntax
 import SwiftSyntaxBuilder
@@ -51,7 +50,9 @@ public struct PackageRewriteError: Error, Equatable, CustomStringConvertible {
         self.message = message
     }
 
-    public var description: String { message }
+    public var description: String {
+        message
+    }
 }
 
 public enum PackageRewriter {
@@ -85,7 +86,7 @@ public enum PackageRewriter {
             }
             let sources = try manifests.map { manifest in
                 let source = try String(contentsOf: manifest, encoding: .utf8)
-                return (manifest, source, try packageDependencies(in: source))
+                return try (manifest, source, packageDependencies(in: source))
             }
             var relativePaths: [String: String] = [:]
             for (_, _, dependencies) in sources {
@@ -331,7 +332,7 @@ private func relativePath(from directory: URL, to destination: URL) -> String {
     let fromParts = pathComponents(directory)
     let toParts = pathComponents(destination)
     var index = 0
-    while index < fromParts.count && index < toParts.count && fromParts[index] == toParts[index] {
+    while index < fromParts.count, index < toParts.count, fromParts[index] == toParts[index] {
         index += 1
     }
     let parts = Array(repeating: "..", count: fromParts.count - index) + toParts[index...]

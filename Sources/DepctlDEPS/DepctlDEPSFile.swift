@@ -17,7 +17,9 @@ public struct DepctlDEPSError: Error, Equatable, CustomStringConvertible {
         self.message = message
     }
 
-    public var description: String { message }
+    public var description: String {
+        message
+    }
 }
 
 public enum DepctlDEPSText {
@@ -48,13 +50,13 @@ public enum DepctlDEPSText {
             }
             let comment = repository.comment.isEmpty ? marker : "\(repository.comment) \(marker)"
             lines.append("""
-                  {
-                    "url": "\(escape(repository.url))",
-                    "commit": "\(escape(repository.commit))",
-                    "dir": "\(escape(directory))",
-                    "comment": "\(escape(comment))"
-                  }
-                """)
+              {
+                "url": "\(escape(repository.url))",
+                "commit": "\(escape(repository.commit))",
+                "dir": "\(escape(directory))",
+                "comment": "\(escape(comment))"
+              }
+            """)
         }
         return "[\n" + lines.joined(separator: ",\n") + "\n]\n"
     }

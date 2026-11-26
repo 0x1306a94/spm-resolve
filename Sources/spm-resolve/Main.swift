@@ -1,8 +1,7 @@
-import Foundation
-
 import ArgumentParser
 import Basics
 import DepctlDEPS
+import Foundation
 import PackageGraph
 import PackageModel
 import PackageRewrite
@@ -48,7 +47,7 @@ struct Resolve: AsyncParsableCommand {
 
         let workspace = try Workspace(
             fileSystem: localFileSystem,
-            location: try workspaceLocation(scratchPath: resolved.scratchPath),
+            location: workspaceLocation(scratchPath: resolved.scratchPath),
             initializationWarningHandler: { warning in
                 fputs("warning: \(warning)\n", stderr)
             }
@@ -216,40 +215,40 @@ private func resolveCacheRoot() throws -> AbsolutePath {
 private func workspaceLocation(scratchPath: AbsolutePath) throws -> Workspace.Location {
     let scratch = scratchPath
     try localFileSystem.createDirectory(scratch, recursive: true)
-    return Workspace.Location(
+    return try Workspace.Location(
         scratchDirectory: scratch.appending("build"),
         editsDirectory: scratch.appending("edits"),
         resolvedVersionsFile: scratch.appending("Package.resolved"),
         localConfigurationDirectory: scratch.appending("configuration"),
-        sharedConfigurationDirectory: try localFileSystem.swiftPMConfigurationDirectory,
-        sharedSecurityDirectory: try localFileSystem.swiftPMSecurityDirectory,
-        sharedCacheDirectory: try localFileSystem.swiftPMCacheDirectory
+        sharedConfigurationDirectory: localFileSystem.swiftPMConfigurationDirectory,
+        sharedSecurityDirectory: localFileSystem.swiftPMSecurityDirectory,
+        sharedCacheDirectory: localFileSystem.swiftPMCacheDirectory
     )
 }
 
 private func kindName(_ kind: PackageReference.Kind) -> String {
     switch kind {
     case .remoteSourceControl:
-        return "git"
+        "git"
     case .localSourceControl:
-        return "local-git"
+        "local-git"
     case .fileSystem:
-        return "path"
+        "path"
     case .registry:
-        return "registry"
+        "registry"
     case .root:
-        return "root"
+        "root"
     }
 }
 
 private func describe(_ state: ResolvedPackagesStore.ResolutionState) -> (revision: String, label: String) {
     switch state {
     case .version(let version, let revision):
-        return (revision ?? "", version.description)
+        (revision ?? "", version.description)
     case .branch(let name, let revision):
-        return (revision, name)
+        (revision, name)
     case .revision(let revision):
-        return (revision, revision)
+        (revision, revision)
     }
 }
 
