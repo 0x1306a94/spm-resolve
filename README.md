@@ -6,16 +6,21 @@ Resolve a Swift package's dependency closure and print its pins, or print reposi
 
 Resolution is written under `~/Library/Caches/org.spm.resolve/<package-name>` and does not modify the target package. For why SwiftPM's `mirrors.json` is not used, see [docs/why.md](docs/why.md).
 
-## Requirements
+## Install
 
-- macOS 15
-- Swift 6.4
-
-## Build
+Homebrew:
 
 ```sh
-swift build --product spm-resolve
+brew install 0x1306a94/tap/spm-resolve
 ```
+
+Or build it yourself. That requires macOS 15 and Swift 6.4.
+
+```sh
+swift build -c release --product spm-resolve
+```
+
+The binary is `.build/release/spm-resolve`. `make` builds the same binary and writes `dist/spm-resolve-<version>.zip` with its sha256.
 
 ## Usage
 

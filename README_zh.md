@@ -6,16 +6,21 @@
 
 解析写在 `~/Library/Caches/org.spm.resolve/<包目录名>`，不修改目标包。为什么不用 SwiftPM 自带的 `mirrors.json`，见 [docs/why_zh.md](docs/why_zh.md)。
 
-## 环境
+## 安装
 
-- macOS 15
-- Swift 6.4
-
-## 构建
+Homebrew：
 
 ```sh
-swift build --product spm-resolve
+brew install 0x1306a94/tap/spm-resolve
 ```
+
+也可以自行编译。需要 macOS 15 和 Swift 6.4。
+
+```sh
+swift build -c release --product spm-resolve
+```
+
+产物在 `.build/release/spm-resolve`。`make` 会打出同一个二进制，并生成 `dist/spm-resolve-<version>.zip` 和对应的 sha256。
 
 ## 用法
 
