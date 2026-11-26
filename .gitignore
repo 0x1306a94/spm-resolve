@@ -1,0 +1,17 @@
+# Ignore OS X cruft.
+.DS_Store
+/default.profraw
+
+# Ignore editor temporary files.
+*~
+.#*
+\#*
+*.pyc
+.*.sw?
+
+# Ignore Xcode user data.
+xcuserdata
+
+# Commonly used name for build products, at the top level.
+/build
+/.build
