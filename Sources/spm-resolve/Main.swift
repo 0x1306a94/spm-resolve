@@ -13,6 +13,7 @@ struct SPMResolve: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "spm-resolve",
         abstract: "Resolve a package and print its dependency closure.",
+        version: ToolVersion.current,
         subcommands: [Resolve.self, Rewrite.self],
         defaultSubcommand: Resolve.self
     )

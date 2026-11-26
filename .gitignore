@@ -15,3 +15,4 @@ xcuserdata
 # Commonly used name for build products, at the top level.
 /build
 /.build
+/dist
